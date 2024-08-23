@@ -1,8 +1,11 @@
 import Player from "./Player.js";
 export default class Board {
   matrix: string[][];
+  winner: boolean | Player;
   constructor() {
     this.matrix = this.makeMatrix();
+
+    this.winner = false;
   }
 
   // default for connect 4 is 6x7
@@ -29,19 +32,42 @@ export default class Board {
     // If the game is still in play, no need to keep playing if the game is over.
 
     // If the move is inside the board.
-    if (column < 0 || column > this.matrix.length) return false;
-    
+    if (column < 0 || column >= this.matrix[0].length) return false;
+
     // If the column is full, you can't place a piece there.
-    if(this.matrix[0][column] !== "") return false
+    if (this.matrix[0][column] !== "") return false;
 
     for (let row = 0; row < this.matrix.length; row++) {
       if (this.matrix[row][column] === "") {
         if (row === this.matrix.length - 1 || this.matrix[row + 1][column] !== "") {
           this.matrix[row][column] = player.color;
+          this.winner = this.checkIfWinner(player);
         }
       }
     }
-    // if(this.matrix[])
     return true;
+  }
+  checkIfWinner(player: Player): boolean | Player {
+    // Vertical
+    for (let row = 0; row < this.matrix.length - 3; row++) {
+      for (let col = 0; col < this.matrix[0].length; col++) {
+        if (
+          this.matrix[row][col] === player.color &&
+          this.matrix[row + 1][col] === player.color &&
+          this.matrix[row + 2][col] === player.color &&
+          this.matrix[row + 3][col] === player.color
+        ) {
+          console.log(`WINNER! WINNER! CHICKEN DINNER!(VERTICAL, ${player.name} is the winner: ${player.color})`);
+          return player;
+        }
+      }
+    }
+
+    // Horizontal
+
+    // Ascending Diagonal
+
+    // Descending Diagonal
+    return false;
   }
 }
