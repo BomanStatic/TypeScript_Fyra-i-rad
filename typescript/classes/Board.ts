@@ -24,8 +24,15 @@ export default class Board {
     return matrix;
   }
 
+  // | _ | _ | _ | _ | _ | _ | _ |
+  // | _ | _ | _ | _ | _ | _ | _ |
+  // | _ | _ | _ | _ | _ | _ | _ |
+  // | _ | _ | _ | _ | _ | _ | _ |
+  // | _ | _ | _ | _ | _ | _ | _ |
+  // | _ | _ | _ | _ | _ | _ | _ |
   render = () => {
-    console.log(this.matrix);
+    console.clear();
+    console.log(this.matrix.map((row) => "| " + row.map((column) => `${column === "" ? "_" : column}`).join(" | ") + " |").join("\n"));
   };
 
   makeMove(player: Player, column: number): boolean {
