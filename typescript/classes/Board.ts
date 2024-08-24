@@ -94,6 +94,19 @@ export default class Board {
     }
 
     // Ascending Diagonal
+    for (let row = 3; row < this.matrix.length; row++) {
+      for (let col = 0; col < this.matrix[0].length; col++) {
+        if (
+          this.matrix[row][col] === player.color &&
+          this.matrix[row - 1][col + 1] === player.color &&
+          this.matrix[row - 2][col + 2] === player.color &&
+          this.matrix[row - 3][col + 3] === player.color
+        ) {
+          console.log(`WINNER! WINNER! CHICKEN DINNER!(ASCENDING DIAGONAL, ${player.name} is the winner: ${player.color})`);
+          return player;
+        }
+      }
+    }
 
     // Descending Diagonal
     return false;
