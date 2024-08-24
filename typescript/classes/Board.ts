@@ -2,10 +2,12 @@ import Player from "./Player.js";
 export default class Board {
   matrix: string[][];
   winner: boolean | Player;
+  gameOver: boolean | Player;
   constructor() {
     this.matrix = this.makeMatrix();
 
     this.winner = false;
+    this.gameOver = false;
   }
 
   // default for connect 4 is 6x7
@@ -30,6 +32,7 @@ export default class Board {
     // When a player makes a move, the piece should fall to the lowest row in that column.
     // Error handeling:
     // If the game is still in play, no need to keep playing if the game is over.
+    if (this.gameOver) return false;
 
     // If the move is inside the board.
     if (column < 0 || column >= this.matrix[0].length) return false;
@@ -40,8 +43,13 @@ export default class Board {
     for (let row = 0; row < this.matrix.length; row++) {
       if (this.matrix[row][column] === "") {
         if (row === this.matrix.length - 1 || this.matrix[row + 1][column] !== "") {
+          //Place the piece in the avalible spot
           this.matrix[row][column] = player.color;
+
+          // Check if there is a winner
           this.winner = this.checkIfWinner(player);
+          // Game Over if there is a winner
+          this.gameOver = this.winner;
         }
       }
     }
