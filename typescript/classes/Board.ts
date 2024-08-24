@@ -79,6 +79,19 @@ export default class Board {
     }
 
     // Horizontal
+    for (let col = 0; col < this.matrix[0].length - 3; col++) {
+      for (let row = 0; row < this.matrix.length; row++) {
+        if (
+          this.matrix[row][col] === player.color &&
+          this.matrix[row][col + 1] === player.color &&
+          this.matrix[row][col + 2] === player.color &&
+          this.matrix[row][col + 3] === player.color
+        ) {
+          console.log(`WINNER! WINNER! CHICKEN DINNER!(HORIZONTAL, ${player.name} is the winner: ${player.color})`);
+          return player;
+        }
+      }
+    }
 
     // Ascending Diagonal
 
