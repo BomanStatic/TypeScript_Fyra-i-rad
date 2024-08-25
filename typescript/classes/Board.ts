@@ -32,6 +32,7 @@ export default class Board {
   // | _ | _ | _ | _ | _ | _ | _ |
   render = () => {
     console.clear();
+    console.log("  " + this.matrix[0].map((_, index) => index).join("   "));
     console.log(this.matrix.map((row) => "| " + row.map((column) => `${column === "" ? "_" : column}`).join(" | ") + " |").join("\n"));
   };
 
