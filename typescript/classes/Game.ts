@@ -8,10 +8,35 @@ export default class Game {
   currentPlayer?: Player;
   board: Board;
   constructor() {
-    this.createPlayers();
+    this.chooseOpponent();
     this.board = new Board();
     this.startGame();
     this.gameOverScreen();
+  }
+
+  // Choose opponent to play against
+  chooseOpponent() {
+    while (true) {
+      console.log("Vad vill du spela emot?");
+      console.log("1. Spelare mot spelare");
+      console.log("2. Spelare mot AI");
+      console.log("3. AI mot AI");
+      const choice = prompt();
+
+      switch (choice) {
+        case "1":
+          this.createPlayers();
+          return;
+        case "2":
+          this.createPlayers();
+          return;
+        case "3":
+          this.createPlayers();
+          return;
+        default:
+          console.log("Skriv in ett giltigt alternativ :)");
+      }
+    }
   }
 
   // Create players and assign who makes the first move
