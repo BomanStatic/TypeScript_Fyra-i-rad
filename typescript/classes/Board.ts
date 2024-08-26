@@ -73,7 +73,6 @@ export default class Board {
           this.matrix[row + 2][col] === player.color &&
           this.matrix[row + 3][col] === player.color
         ) {
-          console.log(`WINNER! WINNER! CHICKEN DINNER!(VERTICAL, ${player.name} is the winner: ${player.color})`);
           return player;
         }
       }
@@ -88,7 +87,6 @@ export default class Board {
           this.matrix[row][col + 2] === player.color &&
           this.matrix[row][col + 3] === player.color
         ) {
-          console.log(`WINNER! WINNER! CHICKEN DINNER!(HORIZONTAL, ${player.name} is the winner: ${player.color})`);
           return player;
         }
       }
@@ -103,7 +101,6 @@ export default class Board {
           this.matrix[row - 2][col + 2] === player.color &&
           this.matrix[row - 3][col + 3] === player.color
         ) {
-          console.log(`WINNER! WINNER! CHICKEN DINNER!(ASCENDING DIAGONAL, ${player.name} is the winner: ${player.color})`);
           return player;
         }
       }
@@ -118,7 +115,6 @@ export default class Board {
           this.matrix[row - 2][col - 2] === player.color &&
           this.matrix[row - 3][col - 3] === player.color
         ) {
-          console.log(`WINNER! WINNER! CHICKEN DINNER!(DESCENDING DIAGONAL, ${player.name} is the winner: ${player.color})`);
           return player;
         }
       }
