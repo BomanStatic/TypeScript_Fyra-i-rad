@@ -1,11 +1,12 @@
 import Player from "./Player.js";
-import prompt from "../helpers/prompt.js";
+import Ai from "./Ai.js";
 import Board from "./Board.js";
+import prompt from "../helpers/prompt.js";
 
 export default class Game {
-  player1?: Player;
-  player2?: Player;
-  currentPlayer?: Player;
+  player1?: Player | Ai;
+  player2?: Player | Ai;
+  currentPlayer?: Player | Ai;
   board: Board;
   constructor() {
     this.chooseOpponent();
@@ -25,13 +26,13 @@ export default class Game {
 
       switch (choice) {
         case "1":
-          this.createPlayers();
+          this.createPlayers("player", "player");
           return;
         case "2":
-          this.createPlayers();
+          this.createPlayers("player", "ai");
           return;
         case "3":
-          this.createPlayers();
+          this.createPlayers("ai", "ai");
           return;
         default:
           console.log("Skriv in ett giltigt alternativ :)");
@@ -40,10 +41,12 @@ export default class Game {
   }
 
   // Create players and assign who makes the first move
-  createPlayers() {
+  createPlayers(player1Type: "player" | "ai", player2Type: "player" | "ai") {
     console.clear();
-    this.player1 = new Player(prompt("Skriv in spelare 1's namn: "), "X");
-    this.player2 = new Player(prompt("Skriv in spelare 2's namn: "), "O");
+    // this.player1 = new Player(prompt("Skriv in spelare 1's namn: "), "X");
+    // this.player2 = new Player(prompt("Skriv in spelare 2's namn: "), "O");
+    this.player1 = player1Type === "player" ? new Player(prompt("Skriv in spelare 1's namn: "), "X") : new Ai("X");
+    this.player2 = player2Type === "player" ? new Player(prompt("Skriv in spelare 2's namn: "), "O") : new Ai("O");
 
     this.currentPlayer = this.player1;
   }
@@ -53,9 +56,8 @@ export default class Game {
       console.clear();
       this.board.render();
 
-      const move = prompt(
-        `${this.currentPlayer?.name} (${this.currentPlayer?.color}), det är din tur! - Skriv in en column för att lägga din bricka på: `
-      );
+      let move: number = this.currentPlayer!.makeMove();
+
       // If we make a valid move, the currentPlayer is getting switched. And we check if the game is still in play.
       if (this.board.makeMove(this.currentPlayer!, move) && !this.board.gameOver) {
         this.currentPlayer = this.currentPlayer === this.player1 ? this.player2 : this.player1;
