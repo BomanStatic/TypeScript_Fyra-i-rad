@@ -1,12 +1,23 @@
+import Ai from "./Ai.js";
 import Player from "./Player.js";
 export default class Board {
   matrix: string[][];
-  winner: boolean | Player;
-  gameOver: boolean | Player;
+  winner: boolean | Player | Ai;
+  isDraw: boolean;
+  gameOver: boolean | Player | Ai;
   constructor() {
+    // this.matrix = [
+    //   ["", "O", "X", "O", "X", "O", "X"],
+    //   ["O", "X", "O", "X", "O", "X", "O"],
+    //   ["X", "X", "O", "X", "O", "O", "X"],
+    //   ["O", "O", "X", "X", "O", "O", "O"],
+    //   ["X", "O", "X", "O", "X", "O", "X"],
+    //   ["O", "X", "O", "X", "O", "X", "O"],
+    // ];
     this.matrix = this.makeMatrix();
 
     this.winner = false;
+    this.isDraw = false;
     this.gameOver = false;
   }
 
@@ -36,7 +47,7 @@ export default class Board {
     console.log(this.matrix.map((row) => "| " + row.map((column) => `${column === "" ? "_" : column}`).join(" | ") + " |").join("\n"));
   };
 
-  makeMove(player: Player, column: number): boolean {
+  placeMove(player: Player | Ai, column: number): boolean {
     // When a player makes a move, the piece should fall to the lowest row in that column.
     // Error handeling:
     // If the game is still in play, no need to keep playing if the game is over.
@@ -56,14 +67,18 @@ export default class Board {
 
           // Check if there is a winner
           this.winner = this.checkIfWinner(player);
-          // Game Over if there is a winner
-          this.gameOver = this.winner;
+
+          // Check if it's a draw
+          this.isDraw = this.checkIfDraw();
+
+          // Game Over if there is a winner or draw
+          this.gameOver = this.winner || this.isDraw;
         }
       }
     }
     return true;
   }
-  checkIfWinner(player: Player): boolean | Player {
+  checkIfWinner(player: Player | Ai): boolean | Player | Ai {
     // Vertical
     for (let row = 0; row < this.matrix.length - 3; row++) {
       for (let col = 0; col < this.matrix[0].length; col++) {
@@ -120,5 +135,8 @@ export default class Board {
       }
     }
     return false;
+  }
+  checkIfDraw() {
+    return this.matrix[0].every((col) => col !== "");
   }
 }
