@@ -6,14 +6,6 @@ export default class Board {
   isDraw: boolean;
   gameOver: boolean | Player | Ai;
   constructor() {
-    // this.matrix = [
-    //   ["", "O", "X", "O", "X", "O", "X"],
-    //   ["O", "X", "O", "X", "O", "X", "O"],
-    //   ["X", "X", "O", "X", "O", "O", "X"],
-    //   ["O", "O", "X", "X", "O", "O", "O"],
-    //   ["X", "O", "X", "O", "X", "O", "X"],
-    //   ["O", "X", "O", "X", "O", "X", "O"],
-    // ];
     this.matrix = this.makeMatrix();
 
     this.winner = false;
